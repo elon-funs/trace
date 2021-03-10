@@ -1,0 +1,107 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('work/index')}">{:lang('ADMIN_WORK')}</a></li>
+        <li><a href="{:url('work/add')}">{:lang('ADMIN_WORK_ORDER')}</a></li>
+        <li><a href="{:url('work/add2')}">{:lang('ADMIN_WORK_REQUEST')}</a></li>
+        <li class="active"><a>编辑工单</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('work/editPost')}">
+        <div class="form-group">
+            <label for="input-creator_name" class="col-sm-2 control-label">创建人</label>
+            <div class="col-md-6 col-sm-10">{$work.creator_name} 　创建时间　－{$work.created_at}</div>
+        </div>
+        <if condition="$work.order_type eq 2">
+            <div class="form-group">
+                <label for="input-title" class="col-sm-2 control-label">标题</label>
+                <div class="col-md-6 col-sm-10">{$work.title}</div>
+            </div>
+        <else /> 
+            <div class="form-group">
+                <label for="input-website" class="col-sm-2 control-label">所属平台</label>
+                <div class="col-md-6 col-sm-10">{$website[$work.website]}</div>
+            </div>
+            <div class="form-group">
+                <label for="input-url" class="col-sm-2 control-label">请求地址</label>
+                <div class="col-md-6 col-sm-10">{$work.url}</div>
+            </div>
+            <div class="form-group">
+                <label for="input-client_type" class="col-sm-2 control-label">所用客户端</label>
+                <div class="col-md-6 col-sm-10">{$client_type[$work.client_type]}</div>
+            </div>
+            <div class="form-group">
+                <label for="input-pixel" class="col-sm-2 control-label">终端分辨率</label>
+                <div class="col-md-6 col-sm-10">{$work.pixel}</div>
+            </div>
+            <div class="form-group">
+                <label for="input-browser" class="col-sm-2 control-label">浏览器版本号</label>
+                <div class="col-md-6 col-sm-10">{$work.browser}</div>
+            </div>
+            <div class="form-group">
+                <label for="input-client_place" class="col-sm-2 control-label">客户所在地</label>
+                <div class="col-md-6 col-sm-10">
+                    {$work.client_place}
+                </div>
+            </div>
+        </if>
+        <div class="form-group">
+            <label for="input-screen" class="col-sm-2 control-label">截图</label>
+            <div class="col-md-6 col-sm-10">
+                <img src="{:cmf_get_image_preview_url($work['screen'])}" style="width: 200px;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-description" class="col-sm-2 control-label">描述</label>
+            <div class="col-md-6 col-sm-10">
+                {$work.description}
+            </div>
+        </div>
+        <hr/>
+        <foreach name="workflow" item="vo">
+           <div class="form-group">
+            <label for="input-description" class="col-sm-2 control-label">跟进处理</label>
+            <div class="col-md-6 col-sm-10">
+                {$vo.created_at},       {$vo.user_name}-----{$vo.remark}-{$vo.pics}
+            </div>
+        </div> 
+        </foreach>
+        <lt name="work.order_status" value='2'>
+        <div class="form-group">
+            <label for="input-remark" class="col-sm-2 control-label">添加备注</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="remark" id="input-remark"></textarea>
+            </div>
+        </div>
+        </lt>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{:lang('STATUS')}</label>
+            <div class="col-md-6 col-sm-10">
+                <lt name="work.order_status" value='2'>
+                <label class="radio-inline">
+                    <php>$active_true_checked=($work['order_status']<2)?"checked":"";</php>
+                    <input type="radio" name="order_status" value="1" {$active_true_checked}>处理中
+                </label>
+                </lt>
+                <label class="radio-inline">
+                    <php>$active_false_checked=($work['order_status']==2)?"checked":"";</php>
+                    <input type="radio" name="order_status" value="2" {$active_false_checked}>处理完成
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="id" value="{$work.id}">
+                <lt name="work.order_status" value='2'>
+
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+            </lt>
+                <a class="btn btn-default" href="{:url('work/index')}">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

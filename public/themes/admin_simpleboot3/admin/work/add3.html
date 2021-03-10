@@ -1,0 +1,79 @@
+<include file="public@header" />
+<script type="text/html" id="photos-item-tpl">
+    <li id="saved-image{id}">
+        <input id="photo-{id}" type="hidden" name="photo_urls[]" value="{filepath}">
+        <input class="form-control" id="photo-{id}-name" type="text" name="photo_names[]" value="{name}"
+               style="width: 200px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+             onclick="imagePreviewDialog(this.src);">
+        <a href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('work/index')}">{:lang('ADMIN_WORK')}</a></li>
+			<li><a href="{:url('work/add')}">{:lang('ADMIN_WORK_ORDER')}</a></li>
+			<li class="active"><a href="{:url('work/add2')}">{:lang('ADMIN_WORK_REQUEST')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('work/addPost')}">
+			<input type="hidden" class="form-control" name="order_type" value="2">
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">标题<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-screen" class="col-sm-2 control-label">截图</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-screen" name="screen"> 
+					<a href="javascript:uploadOneImage('图片上传','#input-screen');">上传图片</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-screen" class="col-sm-2 control-label">截图</label>
+				<div class="col-md-6 col-sm-10">
+                            <ul id="photos" class="pic-list list-unstyled form-inline">
+                                <notempty name="post.more.photos">
+                                    <foreach name="post.more.photos" item="vo">
+                                        <php>$img_url=cmf_get_image_preview_url($vo['url']);</php>
+                                        <li id="saved-image{$key}">
+                                            <input id="photo-{$key}" type="hidden" name="photo_urls[]"
+                                                   value="{$vo.url}">
+                                            <input class="form-control" id="photo-{$key}-name" type="text"
+                                                   name="photo_names[]"
+                                                   value="{$vo.name|default=''}" style="width: 200px;" title="图片名称">
+                                            <img id="photo-{$key}-preview"
+                                                 src="{:cmf_get_image_preview_url($vo['url'])}"
+                                                 style="height:36px;width: 36px;"
+                                                 onclick="parent.imagePreviewDialog(this.src);">
+                                            <a href="javascript:uploadOneImage('图片上传','#photo-{$key}');">替换</a>
+                                            <a href="javascript:(function(){$('#saved-image{$key}').remove();})();">移除</a>
+                                        </li>
+                                    </foreach>
+                                </notempty>
+                            </ul>
+                            <a href="javascript:uploadMultiImage('图片上传','#photos','photos-item-tpl');"
+                               class="btn btn-sm btn-default">选择图片</a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-description" class="col-sm-2 control-label">问题描述<span class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+					<textarea class="form-control" name="description" id="input-description" ></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

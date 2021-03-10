@@ -1,0 +1,49 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('work/index')}">{:lang('ADMIN_WORK')}</a></li>
+        <li><a href="{:url('work/add')}">{:lang('ADMIN_WORK_ORDER')}</a></li>
+        <li><a href="{:url('work/add2')}">{:lang('ADMIN_WORK_REQUEST')}</a></li>
+    </ul>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="20">workID</th>
+                <th width="150">描述</th>
+                <th width="20">状态</th>
+                <th width="20">创建人/时间</th>
+                <th width="20">最后处理人/时间</th>
+                <th width="30">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="works" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.description}</td>
+                    <td>
+                        <eq name="vo.order_status" value="2">
+                            <span class="label label-success">
+                        <else/>
+                            <span class="label label-warning">
+                        </eq>
+                            {$order_status[$vo['order_status']]}</span>
+                        </td>
+                    <td>{$vo.creator_name}<br/>{$vo.created_at}</td>
+                    <td>
+                        <neq name="vo.operator_name" value="0">{$vo.operator_name}<else/>无人处理</neq><br/>{$vo.updated_at}</td>
+                    <td>
+                        <a class="btn btn-xs btn-primary" href="{:url('work/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-primary" href="{:url('work/edit',array('id'=>$vo['id']))}">查看</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
