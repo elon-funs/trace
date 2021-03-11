@@ -37,6 +37,9 @@
                     <td>
                         <a class="btn btn-xs btn-primary" href="{:url('work/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
                         <a class="btn btn-xs btn-primary" href="{:url('work/edit',array('id'=>$vo['id']))}">查看</a>
+                        <if condition="$vo.creator_id eq cmf_get_current_admin_id()">
+                        <a class="btn btn-xs btn-primary" href="{:url('work/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                        </if>
                     </td>
                 </tr>
             </foreach>

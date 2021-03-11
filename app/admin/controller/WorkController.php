@@ -155,11 +155,12 @@ class WorkController extends AdminBaseController
 
     public function delete()
     {
-        if ($this->request->isPost()) {
-            $id = $this->request->param('id', 0, 'intval');
-            work::destroy($id);
-            $this->success("删除成功！", url("work/index"));
+        $id = $this->request->param('id', 0, 'intval');
+        if (Work::where('creator_id', cmf_get_current_admin_id())->value('id', 0) != $id) {
+            $this->error("删除失败,只有创建人可以删除！");
         }
+        Work::destroy($id);
+        $this->success("删除成功！", url("work/index"));
     }
 
     public function waiting()
