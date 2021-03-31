@@ -8,7 +8,7 @@ class Work extends Model
 {
     protected $name = 'work';
 
-    public static $website = ['请选择', '虎扑', '狐狸', 'U球', 'UU球', '红杉'];
+    public static $website = ['请选择', 'UU球', '狐狸', '雷速', '红杉'];
 
     public static $action = ['请选择', '发起人', '处理人'];
 
