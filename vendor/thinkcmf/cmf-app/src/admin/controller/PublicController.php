@@ -32,7 +32,8 @@ class PublicController extends AdminBaseController
         }
 
         $admin_id = session('ADMIN_ID');
-        if (!empty($admin_id)) {//已经登录
+        if (!empty($admin_id)) {
+//已经登录
             return redirect(url("admin/Index/index"));
         } else {
             session("__SP_ADMIN_LOGIN_PAGE_SHOWED_SUCCESS__", true);
@@ -61,15 +62,15 @@ class PublicController extends AdminBaseController
             $this->error('非法登录!', cmf_get_root() . '/');
         }
 
-        $captcha = $this->request->param('captcha');
+        /*        $captcha = $this->request->param('captcha');
         if (empty($captcha)) {
-            $this->error(lang('CAPTCHA_REQUIRED'));
+        $this->error(lang('CAPTCHA_REQUIRED'));
         }
         //验证码
         if (!cmf_captcha_check($captcha)) {
-            $this->error(lang('CAPTCHA_NOT_RIGHT'));
+        $this->error(lang('CAPTCHA_NOT_RIGHT'));
         }
-
+         */
         $name = $this->request->param("username");
         if (empty($name)) {
             $this->error(lang('USERNAME_OR_EMAIL_EMPTY'));
@@ -78,7 +79,8 @@ class PublicController extends AdminBaseController
         if (empty($pass)) {
             $this->error(lang('PASSWORD_REQUIRED'));
         }
-        if (strpos($name, "@") > 0) {//邮箱登陆
+        if (strpos($name, "@") > 0) {
+//邮箱登陆
             $where['user_email'] = $name;
         } else {
             $where['user_login'] = $name;
