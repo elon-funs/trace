@@ -11,7 +11,6 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\Menu;
 
 class MainController extends AdminBaseController
 {
@@ -51,7 +50,6 @@ class MainController extends AdminBaseController
                 $dashboardWidgets[$widgetName] = $widget;
             }
 
-
         }
 
         $dashboardWidgetPlugins = [];
@@ -60,7 +58,8 @@ class MainController extends AdminBaseController
 
         if (!empty($hookResults)) {
             foreach ($hookResults as $hookResult) {
-                if (isset($hookResult['width']) && isset($hookResult['view']) && isset($hookResult['plugin'])) { //验证插件返回合法性
+                if (isset($hookResult['width']) && isset($hookResult['view']) && isset($hookResult['plugin'])) {
+                    //验证插件返回合法性
                     $dashboardWidgetPlugins[$hookResult['plugin']] = $hookResult;
                     if (!isset($dashboardWidgets[$hookResult['plugin']])) {
                         $dashboardWidgets[$hookResult['plugin']] = ['name' => $hookResult['plugin'], 'is_system' => 0];
@@ -69,11 +68,8 @@ class MainController extends AdminBaseController
             }
         }
 
-        $smtpSetting = cmf_get_option('smtp_setting');
-
         $this->assign('dashboard_widgets', $dashboardWidgets);
         $this->assign('dashboard_widget_plugins', $dashboardWidgetPlugins);
-        $this->assign('has_smtp_setting', empty($smtpSetting) ? false : true);
 
         return $this->fetch();
     }
