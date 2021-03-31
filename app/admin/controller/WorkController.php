@@ -41,6 +41,7 @@ class WorkController extends AdminBaseController
             $this->error('您不是工单发起人');
         }
         $this->assign('website', Work::$website);
+        $this->assign('work_order_type', Work::$work_order_type);
         $this->assign('client_type', Work::$client_type);
         return $this->fetch();
     }

@@ -18,4 +18,6 @@ class Work extends Model
 
     public static $order_status = ['待处理', '处理中', '已结单'];
 
+    public static $work_order_type = ['请选择', 'BUG', '故障', '优化', '事故'];
+
 }
