@@ -34,7 +34,7 @@ class PublicController extends AdminBaseController
         $admin_id = session('ADMIN_ID');
         if (!empty($admin_id)) {
             //已经登录
-            return redirect(url("/#/admin/work/my"));
+            return redirect(url("/#/admin/work/index"));
         } else {
             session("__SP_ADMIN_LOGIN_PAGE_SHOWED_SUCCESS__", true);
             $result = hook_one('admin_login');
@@ -110,7 +110,7 @@ class PublicController extends AdminBaseController
                 UserModel::where('id', $result['id'])->update($data);
                 cookie("admin_username", $name, 3600 * 24 * 30);
                 session("__LOGIN_BY_CMF_ADMIN_PW__", null);
-                $this->success(lang('LOGIN_SUCCESS'), url("/#/admin/work/my"));
+                $this->success(lang('LOGIN_SUCCESS'), url("/#/admin/work/index"));
             } else {
                 $this->error(lang('PASSWORD_NOT_RIGHT'));
             }

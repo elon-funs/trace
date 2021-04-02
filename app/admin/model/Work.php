@@ -20,4 +20,12 @@ class Work extends Model
 
     public static $work_order_type = ['请选择', 'BUG', '故障', '优化', '事故'];
 
+    public static $order_step = [
+        1 => '已提交',
+        2 => '已规划方案',
+        3 => '已规划版本待排期',
+        4 => '预期上线',
+        5 => '后续优化排期',
+    ];
+
 }

@@ -75,6 +75,20 @@
             </div>
         </div>
         </lt>
+        <gt name="isproccesor" value='1'>
+        <div class="form-group">
+            <label for="input-step" class="col-sm-2 control-label">处理意见</label>
+            <div class="col-md-6 col-sm-10">
+                <select class="form-control" name="step" id="input-step">
+                    <foreach name="storages" item="vo">
+                    <foreach name="order_step" item="vo">
+                        <php>$type_selected=isset($step)&&$step==$key?"selected":"";</php>
+                        <option value="{$key}" {$type_selected}>{$vo}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+        </gt>
         <div class="form-group">
             <label class="col-sm-2 control-label">{:lang('STATUS')}</label>
             <div class="col-md-6 col-sm-10">

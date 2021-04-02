@@ -108,9 +108,13 @@ class WorkController extends AdminBaseController
         $work     = $work->find($id);
         $workflow = WorkTimeLine::where('work_id', $id)->field('remark,created_at,user_name,work_id,pics,id')->select();
 
+        $isproccesor = UserModel::UserRole(['name', '处理人']);
+
+        $this->assign('isproccesor', $isproccesor);
         $this->assign('work', $work);
         $this->assign('client_type', Work::$client_type);
         $this->assign('website', Work::$website);
+        $this->assign('order_step', Work::$order_step);
         $this->assign('workflow', $workflow);
         return $this->fetch();
     }
