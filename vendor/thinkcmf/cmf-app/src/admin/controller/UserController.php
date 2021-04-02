@@ -71,6 +71,7 @@ class UserController extends AdminBaseController
             ->order("id DESC")
             ->paginate(10);
         $users->appends(['user_login' => $userLogin, 'user_email' => $userEmail]);
+
         // 获取分页显示
         $page = $users->render();
 
@@ -80,9 +81,17 @@ class UserController extends AdminBaseController
             $roleId           = $r['id'];
             $roles["$roleId"] = $r;
         }
+
+        $rolesUserSrc = RoleUserModel::select();
+        $rolesUser    = [];
+        foreach ($rolesUserSrc as $k => $v) {
+            $rolesUser[$v['user_id']][] = $roles[$v['role_id']]['name'];
+        }
+
         $this->assign("page", $page);
         $this->assign("roles", $roles);
         $this->assign("users", $users);
+        $this->assign("rolesUser", $rolesUser);
         return $this->fetch();
     }
 
@@ -282,7 +291,7 @@ class UserController extends AdminBaseController
             $data             = $this->request->post();
             $data['birthday'] = strtotime($data['birthday']);
             $data['id']       = cmf_get_current_admin_id();
-            $create_result    = UserModel::update($data);;
+            $create_result    = UserModel::update($data);
             if ($create_result !== false) {
                 $this->success("保存成功！");
             } else {

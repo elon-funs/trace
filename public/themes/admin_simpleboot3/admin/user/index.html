@@ -23,6 +23,7 @@
 					<th>{:lang('LAST_LOGIN_TIME')}</th>
 					<th>{:lang('EMAIL')}</th>
 					<th>{:lang('STATUS')}</th>
+					<th>角色</th>
 					<th width="140">{:lang('ACTIONS')}</th>
 				</tr>
 			</thead>
@@ -53,6 +54,11 @@
 								<span class="label label-warning">{$user_statuses[$vo['user_status']]}</span>
 							</case>
 						</switch>
+					</td>
+					<td>
+						<if condition="isset($rolesUser[$vo['id']])">
+						{:implode(",",$rolesUser[$vo['id']])}
+						</if>
 					</td>
 					<td>
 						<if condition="$vo['id'] eq 1 || $vo['id'] eq cmf_get_current_admin_id()">
