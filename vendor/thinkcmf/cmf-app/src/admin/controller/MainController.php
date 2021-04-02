@@ -20,6 +20,7 @@ class MainController extends AdminBaseController
      */
     public function index()
     {
+        return redirect(url("/admin/work/my"));exit();
         $dashboardWidgets = [];
         $widgets          = cmf_get_option('admin_dashboard_widgets');
 
